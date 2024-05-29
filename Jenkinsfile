@@ -5,7 +5,7 @@ pipeline {
         stage('Build image') {
             steps {
                 sh 'echo "Building Docker image..."'
-                sh 'docker build -t jorgeajimenezl-app .'
+                sh 'docker build -t ttl.sh/jorgeajimenezl-app .'
                 sh 'docker images'
             }
         }
