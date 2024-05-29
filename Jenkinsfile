@@ -15,16 +15,16 @@ pipeline {
                 sh 'docker push ttl.sh/jorgeajimenezl-app'
             }
         }
-        // stage('Deploy') {
-        //     environment {
-        //         ANSIBLE_HOST_KEY_CHECKING = 'false'
-        //     }
-        //     steps {
-        //         sh 'echo "Deploying..."'
-        //         ansiblePlaybook credentialsId: 'mykey2',
-        //                         inventory: 'hosts.ini',
-        //                         playbook: 'playbook.yml'
-        //     }
-        // }
+        stage('Deploy to target') {
+            environment {
+                ANSIBLE_HOST_KEY_CHECKING = 'false'
+            }
+            steps {
+                sh 'echo "Deploying..."'
+                ansiblePlaybook credentialsId: 'mykey2',
+                                inventory: 'hosts.ini',
+                                playbook: 'playbook.yml'
+            }
+        }
     }
 }

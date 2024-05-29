@@ -1,0 +1,9 @@
+- hosts: app
+  tasks:
+    - name: Run container
+      docker_container:
+        name: app
+        image: ttl.sh/jorgeajimenezl-app:latest
+        state: started
+        ports:
+          - "4444:4444"
