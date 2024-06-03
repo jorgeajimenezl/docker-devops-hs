@@ -15,24 +15,24 @@ pipeline {
                 sh 'docker push ttl.sh/jorgeajimenezl-app'
             }
         }
-        stage('Deploy to kubernetes') {
+        stage('Deploy to target') {
+            environment {
+                ANSIBLE_HOST_KEY_CHECKING = 'false'
+            }
             steps {
-                sh 'echo "Deploying to Kubernetes..."'
-                kubernetesDeploy(configs: 'k8s-configs',
-                                kubeconfigId: 'mykubeconfig',
-                                enableConfigSubstitution: true)
+                sh 'echo "Deploying..."'
+                ansiblePlaybook credentialsId: 'mykey2',
+                                inventory: 'ansible/target.ini',
+                                playbook: 'ansible/target.yml'
             }
         }
-        // stage('Deploy to target') {
-        //     environment {
-        //         ANSIBLE_HOST_KEY_CHECKING = 'false'
-        //     }
-        //     steps {
-        //         sh 'echo "Deploying..."'
-        //         ansiblePlaybook credentialsId: 'mykey2',
-        //                         inventory: 'hosts.ini',
-        //                         playbook: 'playbook.yml'
-        //     }
-        // }
+        stage('Deploy to kubernetes') {
+            steps {
+                withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
+                    sh 'echo "Deploying to Kubernetes..."'
+                    sh 'kubectl --kubeconfig=$KUBECONFIG apply -f deployment.yml'
+                }
+            }
+        }
     }
 }
