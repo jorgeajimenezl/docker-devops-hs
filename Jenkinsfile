@@ -30,7 +30,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
                     sh 'echo "Deploying to Kubernetes..."'
-                    sh 'kubectl --kubeconfig=$KUBECONFIG apply -f deployment.yml'
+                    sh 'kubectl --kubeconfig=$KUBECONFIG apply -f deployment.yaml'
                 }
             }
         }
