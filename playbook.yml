@@ -4,7 +4,7 @@
       command: docker pull ttl.sh/jorgeajimenezl-app:latest
 
     - name: Stop container
-      command: docker ps -aq -filter ancestor=ttl.sh/jorgeajimenezl-app:latest | xargs docker stop | xargs docker rm
+      command: docker ps -aq --filter ancestor=ttl.sh/jorgeajimenezl-app:latest | xargs docker stop | xargs docker rm
       
     - name: Run container
       command: docker run -d -p 4444:4444 ttl.sh/jorgeajimenezl-app:latest
