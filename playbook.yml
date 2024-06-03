@@ -3,5 +3,8 @@
     - name: Pull image
       command: docker pull ttl.sh/jorgeajimenezl-app:latest
 
+    - name: Stop container
+      command: docker stop $(docker ps -a -q --filter ancestor=ttl.sh/jorgeajimenezl-app:latest)
+
     - name: Run container
       command: docker run -d -p 4444:4444 ttl.sh/jorgeajimenezl-app:latest
