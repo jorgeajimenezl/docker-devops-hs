@@ -22,8 +22,8 @@ pipeline {
             steps {
                 sh 'echo "Deploying..."'
                 ansiblePlaybook credentialsId: 'mykey2',
-                                inventory: 'ansible/target.ini',
-                                playbook: 'ansible/target.yml'
+                                inventory: 'hosts.ini',
+                                playbook: 'playbook.yml'
             }
         }
         stage('Deploy to kubernetes') {
